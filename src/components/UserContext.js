@@ -7,6 +7,8 @@ import { getProfileById, createNewProfile } from '../services/profile';
 import { createCompany } from '../services/company';
 import { uploadUserPhoto } from '../services/upload';
 import { useTeamContext } from '../components/Profile/Team/TeamContextProvider';
+import { usePendingForApprovalContext } from '../components/Profile/PendingForApproval/PendingForApprovalContextProvider';
+
 
 const AuthContext = createContext();
 const useAuthContext = () => useContext(AuthContext);
@@ -20,6 +22,8 @@ const AuthProvider = ({ children }) => {
   const [profileID, setProfileID] =useState();
   const navigate = useNavigate();
   const { fetchDataTeam } = useTeamContext();
+  const { fetchDataPendingForApproval} = usePendingForApprovalContext();
+
 
   const fetchData = () => {
     createAxios
@@ -92,6 +96,7 @@ const AuthProvider = ({ children }) => {
       console.log('id profila', userProfile.data.data[0].id);
       console.log('profila', userProfile.data.data[0]);
       fetchDataTeam();
+      fetchDataPendingForApproval();
       fetchData();
     } catch (error) {
       console.error(error);
